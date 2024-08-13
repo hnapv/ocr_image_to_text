@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadButton.disabled = false;
             uploadButton.style.opacity = '1';
         }).catch(err => {
+            alert('Error:', err)
             console.error('Error:', err);
             textResult.textContent = 'Error processing image.';
 
