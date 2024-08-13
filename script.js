@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner');
     const pasteArea = document.getElementById('pasteArea');
     const copyButton = document.getElementById('copyButton');
+    const popup = document.getElementById('popup'); // Thông báo popup
     let imageFile = null;
 
     const selectedFont = fontSelect.value;
@@ -126,13 +127,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     copyButton.addEventListener('click', () => {
         if (textResult.textContent) {
+            // Thêm lớp mờ ngay lập tức
+            copyButton.classList.add('disabled');
+            
+            // Sao chép văn bản vào clipboard
             navigator.clipboard.writeText(textResult.textContent).then(() => {
-                console.log('Text copied to clipboard!');
+                // Hiển thị thông báo thành công
+                popup.textContent = 'Copied to Clipboard!';
+                popup.classList.remove('error');
+                popup.style.display = 'block';
+                setTimeout(() => {
+                    popup.style.display = 'none'; // Ẩn thông báo sau 2 giây
+                }, 2000);
+
+                // Đặt lại lớp mờ sau 0.5 giây
+                setTimeout(() => {
+                    copyButton.classList.remove('disabled');
+                }, 500);
             }).catch(err => {
-                console.error('Failed to copy text: ', err);
+                // Hiển thị thông báo lỗi
+                popup.textContent = 'Failed to Copy!';
+                popup.classList.add('error');
+                popup.style.display = 'block';
+                setTimeout(() => {
+                    popup.style.display = 'none'; // Ẩn thông báo sau 2 giây
+                }, 2000);
+
+                // Đặt lại lớp mờ sau 0.5 giây
+                setTimeout(() => {
+                    copyButton.classList.remove('disabled');
+                }, 500);
             });
         } else {
-            console.log('No text to copy.');
+            alert('No text to copy.');
         }
     });
 });
