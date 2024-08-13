@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OCR Image Upload</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      #container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      #pasteArea {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        width: 300px;
+        height: 300px;
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      #pasteArea img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      #textArea {
+        flex: 1;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        text-align: left;
+        width: 100%;
+      }
+      #textResult {
+        white-space: pre-wrap;
+      }
+      #fontSelector,
+      #fontSizeSelector {
+        margin-top: 20px;
+      }
+      #fontSizeInput {
+        width: 60px;
+        text-align: center;
+      }
+      .size-controls button {
+        margin: 0 5px;
+      }
+      #uploadButton {
+        margin-top: 20px;
+      }
+
+      /* Style for the rotating animation */
+      #spinner {
+        display: none;
+        margin-top: 20px;
+        font-size: 24px;
+      }
+      .rotating {
+        animation: rotate 2s linear infinite;
+      }
+      /* Style for the copy button */
+      #copyButton {
+        margin-top: 20px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+      #copyButton:hover {
+        background-color: #0056b3;
+      }
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>OCR Image Upload</h1>
+    <div id="container">
+      <div id="pasteArea">
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          style="display: none"
+        />
+        <label for="fileInput" style="cursor: pointer"
+          >Click to select an image</label
+        >
+        <button id="pasteButton">Paste from Clipboard</button>
+        <!-- New button -->
+      </div>
+      <div id="textArea">
+        <button id="uploadButton">Start OCR</button>
+        <div id="spinner">🔄</div>
+        <!-- Spinner added here -->
+        <div id="fontSelector">
+          <label for="fontSelect">Choose font:</label>
+          <select id="fontSelect">
+            <option value="Arial" selected>Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+          </select>
+        </div>
+        <div id="fontSizeSelector">
+          <label for="fontSizeInput">Font size:</label>
+          <div class="size-controls">
+            <button id="decreaseSize">-</button>
+            <input
+              type="number"
+              id="fontSizeInput"
+              value="16"
+              min="1"
+              step="1"
+            />
+            <button id="increaseSize">+</button>
+          </div>
+        </div>
+        <div id="result">
+          <h2>Extracted Text:</h2>
+          <pre id="textResult">Select an image and click "Start OCR".</pre>
+          <button id="copyButton">Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
